@@ -10,5 +10,10 @@ public class ListIndex<T> {
         this.list = theList;
         this.index = theIndex;
     }
+
+    public ListIndex(ListIndex<T> listIndex) {
+        list = listIndex.list;
+        index = listIndex.index;
+    }
 }
 

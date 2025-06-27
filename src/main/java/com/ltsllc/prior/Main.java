@@ -30,30 +30,14 @@ public class Main {
         ListIndex<String> listIndex = new ListIndex<String>(text, 0);
 
         while (listIndex.index < listIndex.list.size()) {
-            Item item = new Item(listIndex.list.get(listIndex.index));
+            Item item = new Item();
+            ListIndex<String> newListIndex = new ListIndex<>(listIndex);
             listIndex.index = listIndex.index + 1;
             item.parse(listIndex);
             arrayList.add(item);
         }
 
         return (Item[]) arrayList.toArray();
-    }
-
-    public static Item parseItem(ListIndex<String> listIndex) {
-        Item item = new Item("one");
-        ArrayList<String> arrayList = new ArrayList<>();
-        arrayList.add("one");
-        arrayList.add("two");
-
-        listIndex.list = arrayList;
-        listIndex.index = 0;
-
-        item.parse(listIndex);
-
-        assert (listIndex.index != 0);
-        assert (item.getItemName().equalsIgnoreCase("one"));
-
-        return item;
     }
 
     public static List<String>  readFile (Path path) {

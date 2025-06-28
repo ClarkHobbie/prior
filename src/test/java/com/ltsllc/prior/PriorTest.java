@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-class MainTest {
+class PriorTest {
 
     @Test
     void main() {

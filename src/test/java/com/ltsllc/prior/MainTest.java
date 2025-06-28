@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ class MainTest {
         strings.add("one");
         strings.add("two");
 
-        Main main = new Main();
+        Prior main = new Prior();
         Path path = Paths.get ("test.txt");
         List<Item> items = main.readFile(path);
 
@@ -36,7 +35,7 @@ class MainTest {
         ArrayList<Item> arrayList = new ArrayList<>();
 
         byte[] buff = { '2', '\n' };
-        Main main = new Main();
+        Prior main = new Prior();
         main.inputStream = new ByteArrayInputStream(buff);
 
         Item itemOne = new Item("one");

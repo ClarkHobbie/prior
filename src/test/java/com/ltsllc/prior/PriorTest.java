@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 class PriorTest {
 
@@ -39,9 +40,10 @@ class PriorTest {
     void prioritise() {
         ArrayList<Item> arrayList = new ArrayList<>();
 
-        byte[] buff = { '2', '\n' };
+        byte[] buff = { '2', '\n', '\n' };
         Prior main = new Prior();
         main.inputStream = new ByteArrayInputStream(buff);
+        Scanner scanner = new Scanner(Prior.inputStream);
 
         Item itemOne = new Item("one");
         arrayList.add(itemOne);
@@ -49,7 +51,7 @@ class PriorTest {
         Item itemTwo = new Item ("two");
         arrayList.add(itemTwo);
 
-        main.prioritise(arrayList);
+        main.prioritise(arrayList, scanner);
 
         assert (arrayList.get(0).getItemName().equalsIgnoreCase("two"));
 
@@ -57,9 +59,11 @@ class PriorTest {
         arrayList.add(itemOne);
         arrayList.add(itemTwo);
 
-        buff = new byte[]{'1', '\n'};
+        buff = new byte[]{'1', '\n', '\n'};
         Prior.inputStream = new ByteArrayInputStream(buff);
-        main.prioritise(arrayList);
+        scanner = new Scanner(Prior.inputStream);
+
+        main.prioritise(arrayList, scanner);
 
         assert (arrayList.get(0).getItemName().equalsIgnoreCase("one"));
     }

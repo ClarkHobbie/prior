@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
 
 
 public class Prior {
@@ -24,11 +25,12 @@ public class Prior {
         Path path = Paths.get(args[0]);
         List<Item> items = readFile(path);
 
+        Scanner scanner = new Scanner(Prior.inputStream);
 
-        prioritise(items);
+        prioritise(items, scanner);
     }
 
-    public static void prioritise(List<Item> items) {
+    public static void prioritise(List<Item> items, Scanner scanner) {
         ArrayList<Item> newList = new ArrayList<>(items);
 
         for (int index = 0; index + 1 < items.size(); index++) {
@@ -37,7 +39,7 @@ public class Prior {
             for (int j = 1 + index; j < items.size(); j++) {
                 Item itemTwo = items.get(j);
 
-                if (2 == itemOne.prioritize(itemTwo)) {
+                if (2 == itemOne.prioritize(itemTwo, scanner)) {
                     newList.remove(j);
                     newList.remove(index);
                     newList.add(index, itemTwo);

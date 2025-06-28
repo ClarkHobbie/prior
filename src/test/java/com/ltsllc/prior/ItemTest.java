@@ -3,7 +3,9 @@ package com.ltsllc.prior;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -41,14 +43,36 @@ class ItemTest {
     }
 
     @Test
+    void prioritizeNewReason () {
+        Item itemOne = new Item("one");
+        Item itemTwo = new Item("two");
+
+        String[] strings = { "1\n", "Because it's number one\n"};
+        ByteArrayBuilder byteBuilder = new ByteArrayBuilder();
+
+        for (int i = 0; i < strings.length; i++) {
+            byteBuilder.add(strings[i]);
+        }
+
+        byte[] buff = byteBuilder.toByteArray();
+        Prior.inputStream = new ByteArrayInputStream(buff);
+        Scanner scanner = new Scanner(Prior.inputStream);
+        itemOne.prioritize(itemTwo, scanner);
+
+        assert (itemOne.reasons.size() == 1);
+        assert (itemOne.getReasons().get(0).equalsIgnoreCase("Because it's number one"));
+    }
+
+    @Test
     void prioritize() {
         Item itemOne = new Item("one");
         itemOne.addReason("because it's number one");
         Item itemTwo = new Item("two");
         byte[] buff = { '1', '\n', '1', '\n'};
         Prior.inputStream = new ByteArrayInputStream(buff);
+        Scanner scanner = new Scanner(Prior.inputStream);
 
-        int answer = itemOne.prioritize(itemTwo);
+        int answer = itemOne.prioritize(itemTwo, scanner);
 
         assert (answer == 1 || answer == 2);
         assert (answer == 1);

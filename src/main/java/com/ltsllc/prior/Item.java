@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 public class Item {
-    protected String string;
+    protected String itemName;
 
     public ArrayList<String> getReasons() {
         return reasons;
@@ -21,18 +21,19 @@ public class Item {
     protected ArrayList<String> reasons = new ArrayList<>();
 
     public String getItemName() {
-        return string;
+        return itemName;
     }
 
-    public void setItemName(String string) {
-        this.string = string;
+    public void setItemName(String string)
+    {
+        itemName = string;
     }
 
     public Item () {
-        this.string = null;
+        this.itemName = null;
     }
     public Item (String string) {
-        this.string = string;
+        this.itemName = string;
     }
 
     public void addReason (String string) {
@@ -40,7 +41,7 @@ public class Item {
     }
 
     public void parse (ListIndex<String> listIndex) {
-        string = listIndex.list.get(listIndex.index);
+        itemName = listIndex.list.get(listIndex.index);
         listIndex.index++;
         for (int i = listIndex.index; i < listIndex.list.size(); i++) {
             if (listIndex.list.get(i).startsWith("\t") || listIndex.list.get(i).startsWith(" ")) {
@@ -57,55 +58,75 @@ public class Item {
         }
     }
 
-    public int prioritize (Item other) {
+    public int prioritize (Item other, Scanner scanner) {
         int answer = 0;
-        Scanner scanner = new Scanner(Prior.inputStream);
 
         while (answer != 1 && answer != 2) {
             System.out.println("Which is more important one or two?");
             System.out.print("1) ");
-            System.out.print(string);
+            System.out.print(itemName);
             System.out.println();
             System.out.print("2) ");
-            System.out.println(other.string);
+            System.out.println(other.itemName);
 
             answer = scanner.nextInt();
-            scanner.nextLine();
+            String tempString = scanner.nextLine();
 
-            if (answer ==  1 && reasons.size() > 0) {
-                answer = -1;
-                while (answer == -1) {
-                    System.out.println("What is the reason?");
-                    System.out.println();
-                    printReasons();
-                    System.out.print(reasons.size() + 1);
-                    System.out.println(") New");
-                    System.out.print (reasons.size() + 2);
-                    System.out.println(") Use above");
+            if (answer == 1 && reasons.size() == 0) {
+                newReason(scanner);
+            } else if (answer == 1){
+                setReason(scanner);
+            }
 
-                    String tempString;
-
-                    try {
-                        tempString = scanner.nextLine();
-                        answer = Integer.parseInt(tempString);
-                    } catch (NumberFormatException e) {
-                        answer = -1;
-                    }
-
-                    if (answer < 0 || answer > reasons.size() + 1) {
-                        answer = -1;
-                    }
-
-                    if (answer == reasons.size() + 1) {
-                        System.out.println("Enter new reason");
-                        tempString = scanner.nextLine();
-                        reasons.add (tempString);
-                    }
-               }
+            if (answer == 2 && other.getReasons().size() == 0) {
+                other.newReason(scanner);
+            } else if (answer == 2) {
+                other.setReason(scanner);;
             }
         }
 
         return answer;
+    }
+
+    public void setReason(Scanner scanner) {
+        int answer = -1;
+        while (answer == -1) {
+            if (reasons.size() < 1) {
+                newReason(scanner);
+            }
+            else {
+                System.out.println("Which reason?");
+                System.out.println();
+                printReasons();
+                System.out.print(reasons.size() + 1);
+                System.out.println(") New");
+
+                String tempString;
+
+                try {
+                    tempString = scanner.nextLine();
+                    answer = Integer.parseInt(tempString);
+                } catch (NumberFormatException e) {
+                    answer = -1;
+                }
+
+                if (answer < 0 || answer > reasons.size() + 1) {
+                    answer = -1;
+                }
+
+                if (answer > 0 && reasons.size() == 0) {
+                    newReason(scanner);
+                }
+            }
+        }
+    }
+
+    public void newReason (Scanner scanner) {
+        System.out.println("Enter new reason");
+        String tempString = scanner.nextLine();
+        if (!tempString.equalsIgnoreCase("")) {
+            reasons.add(tempString);
+        }
     }
 
     public void printReasons() {

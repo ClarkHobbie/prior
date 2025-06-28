@@ -1,9 +1,14 @@
 package com.ltsllc.prior;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -57,5 +62,24 @@ class PriorTest {
         main.prioritise(arrayList);
 
         assert (arrayList.get(0).getItemName().equalsIgnoreCase("one"));
+    }
+
+    @BeforeEach
+    void setUp() {
+        String[] text = {
+                "one",
+                "\tbecause it's number one",
+                "two"
+        };
+
+        TextFile textFile = new TextFile(new File("temp.txt"));
+        textFile.setText(text);
+        textFile.write();
+    }
+
+    @AfterEach
+    void tearDown() {
+        TextFile textFile = new TextFile(new File("temp.txt"));
+        textFile.delete();
     }
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class Item {
@@ -43,7 +44,12 @@ public class Item {
         listIndex.index++;
         for (int i = listIndex.index; i < listIndex.list.size(); i++) {
             if (listIndex.list.get(i).startsWith("\t") || listIndex.list.get(i).startsWith(" ")) {
-                addReason(listIndex.list.get(listIndex.index));
+                String tempString = listIndex.list.get(i);
+                int index = 0;
+                while (Character.isWhitespace(tempString.charAt(index))) {
+                    index++;
+                }
+                addReason(tempString.substring(index));
             } else {
                 listIndex.index = i;
                 break;
@@ -62,9 +68,53 @@ public class Item {
             System.out.println();
             System.out.print("2) ");
             System.out.println(other.string);
-            answer = Integer.parseInt(scanner.nextLine());
+
+            answer = scanner.nextInt();
+            scanner.nextLine();
+
+            if (answer ==  1 && reasons.size() > 0) {
+                answer = -1;
+                while (answer == -1) {
+                    System.out.println("What is the reason?");
+                    System.out.println();
+                    printReasons();
+                    System.out.print(reasons.size() + 1);
+                    System.out.println(") New");
+                    System.out.print (reasons.size() + 2);
+                    System.out.println(") Use above");
+
+                    String tempString;
+
+                    try {
+                        tempString = scanner.nextLine();
+                        answer = Integer.parseInt(tempString);
+                    } catch (NumberFormatException e) {
+                        answer = -1;
+                    }
+
+                    if (answer < 0 || answer > reasons.size() + 1) {
+                        answer = -1;
+                    }
+
+                    if (answer == reasons.size() + 1) {
+                        System.out.println("Enter new reason");
+                        tempString = scanner.nextLine();
+                        reasons.add (tempString);
+                    }
+               }
+            }
         }
 
         return answer;
+    }
+
+    public void printReasons() {
+        if (reasons.size() > 0) {
+            for (int number = 0; number < reasons.size(); number++) {
+                System.out.print(number + 1);
+                System.out.print(") ");
+                System.out.println(reasons.get(number));
+            }
+        }
     }
 }

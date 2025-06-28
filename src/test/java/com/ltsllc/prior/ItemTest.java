@@ -23,7 +23,7 @@ class ItemTest {
         assert (listIndex.index > 0);
         assert (item.getItemName().equalsIgnoreCase("one"));
         assert (item.getReasons().size() == 1);
-        assert (item.getReasons().get(0).equalsIgnoreCase("    Because it's number one"));
+        assert (item.getReasons().get(0).equalsIgnoreCase("Because it's number one"));
     }
 
     @Test
@@ -43,8 +43,9 @@ class ItemTest {
     @Test
     void prioritize() {
         Item itemOne = new Item("one");
+        itemOne.addReason("because it's number one");
         Item itemTwo = new Item("two");
-        byte[] buff = { '1', '\n'};
+        byte[] buff = { '1', '\n', '1', '\n'};
         Prior.inputStream = new ByteArrayInputStream(buff);
 
         int answer = itemOne.prioritize(itemTwo);

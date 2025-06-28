@@ -1,5 +1,6 @@
 package com.ltsllc.prior;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListIndex<T> {
@@ -14,6 +15,11 @@ public class ListIndex<T> {
     public ListIndex(ListIndex<T> listIndex) {
         list = listIndex.list;
         index = listIndex.index;
+    }
+
+    public ListIndex() {
+        list = new ArrayList<>();
+        index = -1;
     }
 }
 

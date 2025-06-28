@@ -2,6 +2,7 @@ package com.ltsllc.prior;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -37,5 +38,18 @@ class ItemTest {
 
         assert (item.getItemName().equalsIgnoreCase("one"));
         assert (item.getReasons().size() == 0);
+    }
+
+    @Test
+    void prioritize() {
+        Item itemOne = new Item("one");
+        Item itemTwo = new Item("two");
+        byte[] buff = { '1', '\n'};
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(buff);
+
+        int answer = itemOne.prioritize(itemTwo, byteArrayInputStream);
+
+        assert (answer == 1 || answer == 2);
+        assert (answer == 1);
     }
 }

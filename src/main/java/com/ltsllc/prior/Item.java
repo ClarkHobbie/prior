@@ -1,6 +1,10 @@
 package com.ltsllc.prior;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Item {
     protected String string;
@@ -45,5 +49,22 @@ public class Item {
                 break;
             }
         }
+    }
+
+    public int prioritize (Item other, InputStream inputStream) {
+        int answer = 0;
+        Scanner scanner = new Scanner(inputStream);
+
+        while (answer != 1 && answer != 2) {
+            System.out.println("Which is more important one or two?");
+            System.out.print("1) ");
+            System.out.print(string);
+            System.out.println();
+            System.out.print("2) ");
+            System.out.println(other.string);
+            answer = Integer.parseInt(scanner.nextLine());
+        }
+
+        return answer;
     }
 }

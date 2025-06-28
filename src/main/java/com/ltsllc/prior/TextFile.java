@@ -97,7 +97,8 @@ public class TextFile {
 
     public void delete() {
         try {
-            Files.delete(path);
+            if (Files.exists(path))
+                Files.delete(path);
         } catch (IOException e) {
             throw new RuntimeException("error deleting text file, " + path, e);
         }

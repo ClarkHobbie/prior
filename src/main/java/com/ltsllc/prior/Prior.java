@@ -25,10 +25,10 @@ public class Prior {
         List<Item> items = readFile(path);
 
 
-        prioritise(items,System.in);
+        prioritise(items);
     }
 
-    public static void prioritise(List<Item> items, InputStream inputStream) {
+    public static void prioritise(List<Item> items) {
         ArrayList<Item> newList = new ArrayList<>(items);
 
         for (int index = 0; index + 1 < items.size(); index++) {
@@ -37,7 +37,7 @@ public class Prior {
             for (int j = 1 + index; j < items.size(); j++) {
                 Item itemTwo = items.get(j);
 
-                if (2 == itemOne.prioritize(itemTwo, inputStream)) {
+                if (2 == itemOne.prioritize(itemTwo)) {
                     newList.remove(j);
                     newList.remove(index);
                     newList.add(index, itemTwo);

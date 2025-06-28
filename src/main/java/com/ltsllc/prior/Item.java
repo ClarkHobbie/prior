@@ -51,9 +51,9 @@ public class Item {
         }
     }
 
-    public int prioritize (Item other, InputStream inputStream) {
+    public int prioritize (Item other) {
         int answer = 0;
-        Scanner scanner = new Scanner(inputStream);
+        Scanner scanner = new Scanner(Prior.inputStream);
 
         while (answer != 1 && answer != 2) {
             System.out.println("Which is more important one or two?");

@@ -44,7 +44,7 @@ class PriorTest {
         Item itemTwo = new Item ("two");
         arrayList.add(itemTwo);
 
-        main.prioritise(arrayList, new ByteArrayInputStream(buff));
+        main.prioritise(arrayList);
 
         assert (arrayList.get(0).getItemName().equalsIgnoreCase("two"));
 
@@ -53,7 +53,8 @@ class PriorTest {
         arrayList.add(itemTwo);
 
         buff = new byte[]{'1', '\n'};
-        main.prioritise(arrayList, new ByteArrayInputStream(buff));
+        Prior.inputStream = new ByteArrayInputStream(buff);
+        main.prioritise(arrayList);
 
         assert (arrayList.get(0).getItemName().equalsIgnoreCase("one"));
     }

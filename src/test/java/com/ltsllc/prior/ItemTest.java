@@ -45,9 +45,9 @@ class ItemTest {
         Item itemOne = new Item("one");
         Item itemTwo = new Item("two");
         byte[] buff = { '1', '\n'};
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(buff);
+        Prior.inputStream = new ByteArrayInputStream(buff);
 
-        int answer = itemOne.prioritize(itemTwo, byteArrayInputStream);
+        int answer = itemOne.prioritize(itemTwo);
 
         assert (answer == 1 || answer == 2);
         assert (answer == 1);

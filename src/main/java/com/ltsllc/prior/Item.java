@@ -137,12 +137,15 @@ public class Item {
                 System.out.print(reasons.size() + 1);
                 System.out.println(") New");
 
-                String tempString;
+                String tempString = null;
 
                 try {
                     tempString = scanner.nextLine();
                     answer = Integer.parseInt(tempString);
                 } catch (NumberFormatException e) {
+                    if (tempString.equalsIgnoreCase("")) {
+                        break;
+                    }
                     answer = -1;
                 }
 

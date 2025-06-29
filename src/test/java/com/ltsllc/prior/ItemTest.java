@@ -68,8 +68,13 @@ class ItemTest {
         Item itemOne = new Item("one");
         itemOne.addReason("because it's number one");
         Item itemTwo = new Item("two");
-        byte[] buff = { '1', '\n', '1', '\n'};
-        Prior.inputStream = new ByteArrayInputStream(buff);
+        String[] strings = {
+                "1\n",
+                "\n"
+        };
+        ByteArrayBuilder byteArrayBuilder = new ByteArrayBuilder();
+        byteArrayBuilder.add(strings);
+        Prior.inputStream = new ByteArrayInputStream(byteArrayBuilder.toByteArray());
         Scanner scanner = new Scanner(Prior.inputStream);
 
         int answer = itemOne.prioritize(itemTwo, scanner);

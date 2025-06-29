@@ -20,15 +20,24 @@ class PriorTest {
     @Test
     void main() {
         String[] strings = {
+                "one",
+                "\tBecause it's number one",
+                "two"
+        };
+        TextFile textFile = new TextFile("temp.txt");
+        textFile.setText(strings);
+        textFile.write();
+
+        strings = new String[] {
                 "1\n",
-                "1\n"
+                "\n"
         };
         ByteArrayBuilder byteArrayBuilder = new ByteArrayBuilder();
         byteArrayBuilder.add(strings);
         Prior.inputStream = new ByteArrayInputStream(byteArrayBuilder.toByteArray());
         String[] args = { "temp.txt" };
         Prior.main(args);
-        TextFile textFile = new TextFile(new File("temp.txt"));
+        textFile = new TextFile("temp.txt");
         textFile.load();
         assert (textFile.getText().get(0).equalsIgnoreCase("one"));
     }
@@ -107,5 +116,16 @@ class PriorTest {
 
     @Test
     void parseItem() {
+        Prior prior = new Prior();
+        TextFile textFile = new TextFile("temp.txt");
+        textFile.load();
+
+        ListIndex<String> listIndex = new ListIndex<>(textFile.getText(),0);
+        Item item = prior.parseItem(textFile.getText(), listIndex);
+
+        assert (item.getItemName().equalsIgnoreCase("one"));
+        assert (item.getReasons().size() > 0);
+        assert (item.getReasons().get(0).equalsIgnoreCase("Because it's number one"));
+
     }
 }

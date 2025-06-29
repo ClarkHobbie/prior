@@ -131,37 +131,24 @@ public class Item {
                 newReason(scanner);
             }
             else {
-                System.out.println("Which reason?");
+                System.out.println("Enter new reason or hit return to choose an existing reason");
                 System.out.println();
                 printReasons();
-                System.out.print(reasons.size() + 1);
-                System.out.println(") New");
 
                 String tempString = null;
 
-                try {
-                    tempString = scanner.nextLine();
-                    answer = Integer.parseInt(tempString);
-                } catch (NumberFormatException e) {
-                    if (tempString.equalsIgnoreCase("")) {
-                        break;
-                    }
-                    answer = -1;
+                tempString = scanner.nextLine();
+                if (tempString.equalsIgnoreCase("")) {
+                    break;
                 }
-
-                if (answer < 0 || answer > reasons.size() + 1) {
-                    answer = -1;
-                }
-
-                if (answer > 0 && reasons.size() == 0) {
-                    newReason(scanner);
-                }
+                tempString.trim();
+                reasons.add(tempString);
             }
         }
     }
 
     public void newReason (Scanner scanner) {
-        System.out.println("Enter new reason");
+        System.out.println("Enter new reason or hit return for none");
         String tempString = scanner.nextLine();
         if (!tempString.equalsIgnoreCase("")) {
             reasons.add(tempString);
@@ -170,10 +157,8 @@ public class Item {
 
     public void printReasons() {
         if (reasons.size() > 0) {
-            for (int number = 0; number < reasons.size(); number++) {
-                System.out.print(number + 1);
-                System.out.print(") ");
-                System.out.println(reasons.get(number));
+            for (String string : reasons) {
+                System.out.println(string);
             }
         }
     }

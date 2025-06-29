@@ -57,13 +57,11 @@ public class Prior {
     }
 
     public static void prioritise(List<Item> items, Scanner scanner) {
-        ArrayList<Item> newList = new ArrayList<>();
+        for (int firstIndex = 0; firstIndex < items.size(); firstIndex++) {
+            Item itemOne = items.get(firstIndex);
 
-        for (int index = 0; index + 1 < items.size(); index++) {
-            Item itemOne = items.get(index);
-
-            for (int j = 1 + index; j < items.size(); j++) {
-                Item itemTwo = items.get(j);
+            for (int secondIndex = 1 + firstIndex; secondIndex < items.size(); secondIndex++) {
+                Item itemTwo = items.get(secondIndex);
 
                 int result = itemOne.compareTo(itemTwo, scanner);
                 if (result == 1) {

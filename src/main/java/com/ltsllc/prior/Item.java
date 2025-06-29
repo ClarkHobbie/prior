@@ -1,14 +1,50 @@
 package com.ltsllc.prior;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class Item {
     protected String itemName;
+    protected int score = 0;
+    protected Map<Item, Boolean> comesBefore = new HashMap<>();
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int incrementScore () {
+        score++;
+        return score;
+    }
+
+    public Map<Item, Boolean> getComesBefore() {
+        return comesBefore;
+    }
+
+    public void setComesBefore(Map<Item, Boolean> comesBefore) {
+        this.comesBefore = comesBefore;
+    }
+
+    public boolean isBefore (Item item) {
+        Boolean bool = false;
+
+        bool = comesBefore.get(item);
+        if (bool == null) {
+            return false;
+        }
+
+        return bool.booleanValue();
+    }
+
+
+    public void setIsBefore (Item item, boolean value) {
+        Boolean bool = new Boolean(value);
+        comesBefore.put(item, bool);
+    }
 
     public ArrayList<String> getReasons() {
         return reasons;
@@ -135,6 +171,22 @@ public class Item {
                 System.out.print(number + 1);
                 System.out.print(") ");
                 System.out.println(reasons.get(number));
+            }
+        }
+    }
+
+    public void write(FileWriter fileWriter) {
+        try {
+            fileWriter.write(itemName + "\n");
+        } catch (IOException e) {
+            throw new RuntimeException("could not write item name to file", e);
+        }
+
+        for (String reason : reasons) {
+            try {
+                fileWriter.write("\t" + reason + "\n");
+            } catch (IOException e) {
+                throw new RuntimeException("could not write reason, " + reason + " to file", e);
             }
         }
     }

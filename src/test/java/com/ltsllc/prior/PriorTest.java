@@ -32,8 +32,7 @@ class PriorTest {
         Path path = Paths.get ("test.txt");
         List<Item> items = main.readFile(path);
 
-        assert (items.get(0).getItemName().equalsIgnoreCase("one"));
-
+        assert (items.get(0).getItemName().equalsIgnoreCase("three"));
     }
 
     @Test
@@ -53,7 +52,7 @@ class PriorTest {
 
         main.prioritise(arrayList, scanner);
 
-        assert (arrayList.get(0).getItemName().equalsIgnoreCase("two"));
+        assert (arrayList.get(0).getItemName().equalsIgnoreCase("one"));
 
         arrayList.clear();
         arrayList.add(itemOne);

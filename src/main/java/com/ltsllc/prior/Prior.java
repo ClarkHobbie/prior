@@ -1,18 +1,18 @@
 package com.ltsllc.prior;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 
 public class Prior {
     public static InputStream inputStream;
+    private static int[] score = null;
+    private static boolean[][] comparisons = null;
 
     public static void main(String[] args) {
         if (args.length <= 0) {
@@ -25,13 +25,41 @@ public class Prior {
         Path path = Paths.get(args[0]);
         List<Item> items = readFile(path);
 
-        Scanner scanner = new Scanner(Prior.inputStream);
+        score = new int[items.size()];
+        Arrays.fill(score, 0);
 
+        comparisons = new boolean[items.size()][items.size()];
+        for (int index = 0; index < items.size(); index++) {
+            for (int j = 0; j < items.size(); j++) {
+                comparisons[index][j] = false;
+            }
+        }
+
+        Scanner scanner = new Scanner(Prior.inputStream);
         prioritise(items, scanner);
+
+        path.toFile().delete();
+
+        FileWriter fileWriter = null;
+        try {
+            fileWriter = new FileWriter(path.toFile());
+        } catch (IOException e) {
+            throw new RuntimeException("could not open " + path.toFile(), e);
+        }
+
+        for (Item item : items) {
+            item.write(fileWriter);
+        }
+
+        try {
+            fileWriter.close();
+        } catch (IOException e) {
+            throw new RuntimeException("could not close file " + path.toFile(), e);
+        }
     }
 
     public static void prioritise(List<Item> items, Scanner scanner) {
-        ArrayList<Item> newList = new ArrayList<>(items);
+        ArrayList<Item> newList = new ArrayList<>();
 
         for (int index = 0; index + 1 < items.size(); index++) {
             Item itemOne = items.get(index);
@@ -39,17 +67,22 @@ public class Prior {
             for (int j = 1 + index; j < items.size(); j++) {
                 Item itemTwo = items.get(j);
 
-                if (2 == itemOne.prioritize(itemTwo, scanner)) {
-                    newList.remove(j);
-                    newList.remove(index);
-                    newList.add(index, itemTwo);
-                    newList.add(j, itemOne);
+                int result = itemOne.prioritize(itemTwo, scanner);
+                if (result == 1) {
+                    itemOne.incrementScore();
+                    itemOne.setIsBefore(itemTwo, true);
+                } else if (result == 2) {
+                    itemTwo.incrementScore();
+                    itemTwo.setIsBefore(itemOne, true);
+                } else {
+                    throw new RuntimeException("impossible case");
                 }
             }
         }
 
-        items.clear();
-        items.addAll(newList);
+        Comparator<Item> comparator = new ItemComparator();
+        Collections.sort(items, comparator);
+        items = items;
     }
 
     private static List<Item> parseList (ListIndex<String> listIndex) {

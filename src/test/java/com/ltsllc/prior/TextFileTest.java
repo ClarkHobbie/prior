@@ -33,4 +33,12 @@ class TextFileTest {
         assert (!file.exists());
 
     }
+
+    @Test
+    void setText() {
+    }
+
+    @Test
+    void load() {
+    }
 }

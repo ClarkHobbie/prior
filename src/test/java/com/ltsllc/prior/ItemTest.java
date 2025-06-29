@@ -82,4 +82,20 @@ class ItemTest {
         assert (answer == 1 || answer == 2);
         assert (answer == 1);
     }
+
+    @Test
+    void newReason() {
+    }
+
+    @Test
+    void printReasons() {
+    }
+
+    @Test
+    void write() {
+    }
+
+    @Test
+    void compareTo() {
+    }
 }

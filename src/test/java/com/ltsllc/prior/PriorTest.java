@@ -104,4 +104,8 @@ class PriorTest {
         TextFile textFile = new TextFile(new File("temp.txt"));
         textFile.delete();
     }
+
+    @Test
+    void parseItem() {
+    }
 }

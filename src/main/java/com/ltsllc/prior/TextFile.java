@@ -103,4 +103,12 @@ public class TextFile {
             throw new RuntimeException("error deleting text file, " + path, e);
         }
     }
+
+    public void load() {
+        try {
+            text = Files.readAllLines(path);
+        } catch (IOException e) {
+            throw new RuntimeException("error reading file, " + path.toFile(),e);
+        }
+    }
 }

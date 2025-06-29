@@ -10,7 +10,7 @@ import java.util.*;
 
 
 public class Prior {
-    public static InputStream inputStream;
+    public static InputStream inputStream = System.in;
     private static int[] score = null;
     private static boolean[][] comparisons = null;
 
@@ -19,8 +19,6 @@ public class Prior {
             System.out.println("usage prior <file>");
             System.exit(1);
         }
-
-        inputStream = System.in;
 
         Path path = Paths.get(args[0]);
         List<Item> items = readFile(path);
@@ -67,7 +65,7 @@ public class Prior {
             for (int j = 1 + index; j < items.size(); j++) {
                 Item itemTwo = items.get(j);
 
-                int result = itemOne.prioritize(itemTwo, scanner);
+                int result = itemOne.compareTo(itemTwo, scanner);
                 if (result == 1) {
                     itemOne.incrementScore();
                     itemOne.setIsBefore(itemTwo, true);

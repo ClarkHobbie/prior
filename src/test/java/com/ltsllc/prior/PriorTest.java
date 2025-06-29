@@ -19,6 +19,18 @@ class PriorTest {
 
     @Test
     void main() {
+        String[] strings = {
+                "1\n",
+                "1\n"
+        };
+        ByteArrayBuilder byteArrayBuilder = new ByteArrayBuilder();
+        byteArrayBuilder.add(strings);
+        Prior.inputStream = new ByteArrayInputStream(byteArrayBuilder.toByteArray());
+        String[] args = { "temp.txt" };
+        Prior.main(args);
+        TextFile textFile = new TextFile(new File("temp.txt"));
+        textFile.load();
+        assert (textFile.getText().get(0).equalsIgnoreCase("one"));
     }
 
 
@@ -32,16 +44,18 @@ class PriorTest {
         Path path = Paths.get ("test.txt");
         List<Item> items = main.readFile(path);
 
-        assert (items.get(0).getItemName().equalsIgnoreCase("three"));
+        assert (items.get(0).getItemName().equalsIgnoreCase("one"));
     }
 
     @Test
     void prioritise() {
         ArrayList<Item> arrayList = new ArrayList<>();
 
-        byte[] buff = { '2', '\n', '\n' };
+        String[] buff = { "1\n", "\n" };
         Prior main = new Prior();
-        main.inputStream = new ByteArrayInputStream(buff);
+        ByteArrayBuilder byteArrayBuilder = new ByteArrayBuilder();
+        byteArrayBuilder.add(buff);
+        Prior.inputStream = new ByteArrayInputStream(byteArrayBuilder.toByteArray());
         Scanner scanner = new Scanner(Prior.inputStream);
 
         Item itemOne = new Item("one");
@@ -58,8 +72,13 @@ class PriorTest {
         arrayList.add(itemOne);
         arrayList.add(itemTwo);
 
-        buff = new byte[]{'1', '\n', '\n'};
-        Prior.inputStream = new ByteArrayInputStream(buff);
+        buff = new String[]{
+                "1\n",
+                "\n"
+        };
+        byteArrayBuilder = new ByteArrayBuilder();
+        byteArrayBuilder.add(buff);
+        Prior.inputStream = new ByteArrayInputStream(byteArrayBuilder.toByteArray());
         scanner = new Scanner(Prior.inputStream);
 
         main.prioritise(arrayList, scanner);

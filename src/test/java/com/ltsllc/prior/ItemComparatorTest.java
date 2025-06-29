@@ -18,9 +18,9 @@ class ItemComparatorTest {
 
         Comparator<Item> comparator = new ItemComparator();
         int result = comparator.compare(itemOne, itemTwo);
-        assert (result > 0);
+        assert (result < 0);
 
         result = comparator.compare(itemTwo, itemOne);
-        assert (result < 0);
+        assert (result > 0);
     }
 }

@@ -30,4 +30,10 @@ public class ByteArrayBuilder {
 
         return buff;
     }
+
+    public void add(String[] strings) {
+        for (String string : strings) {
+            add(string);
+        }
+    }
 }

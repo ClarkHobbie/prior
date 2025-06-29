@@ -190,4 +190,8 @@ public class Item {
             }
         }
     }
+
+    public int compareTo(Item item, Scanner scanner) {
+        return prioritize(item, scanner);
+    }
 }

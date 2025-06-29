@@ -15,6 +15,11 @@ public class TextFile {
     protected Path path;
     protected List<String> text;
 
+    public TextFile(String string) {
+        File file = new File(string);
+        setPath(file);
+    }
+
     public List<String> getText() {
         return text;
     }
@@ -48,14 +53,6 @@ public class TextFile {
         }
 
         setText(arrayList);
-    }
-
-    public TextFile(Path path) {
-        try {
-            text = Files.readAllLines(path);
-        } catch (IOException e) {
-            throw new RuntimeException("error reading file, " + path, e);
-        }
     }
 
     public void write() {

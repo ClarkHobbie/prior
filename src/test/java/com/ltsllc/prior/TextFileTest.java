@@ -36,9 +36,29 @@ class TextFileTest {
 
     @Test
     void setText() {
+        String[] text = {
+                "one",
+                "two"
+        };
+        TextFile textFile = new TextFile(new File("temp.txt"));
+        textFile.setText(text);
+
+        assert (textFile.getText().get(0).equalsIgnoreCase("one"));
     }
 
     @Test
     void load() {
+        TextFile textFile = new TextFile("temp.txt");
+        String[] text = {
+                "one",
+                "two"
+        };
+        textFile.setText(text);
+        textFile.write();
+
+        textFile = new TextFile("temp.txt");
+        textFile.load();
+
+        assert (textFile.getText().get(0).equalsIgnoreCase("one"));
     }
 }

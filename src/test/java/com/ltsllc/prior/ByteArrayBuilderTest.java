@@ -43,8 +43,5 @@ class ByteArrayBuilderTest {
         byte[] byteArray = byteArrayBuilder.toByteArray();
 
         assert(bytesEqual(buff, byteArray));
-
-
-
     }
 }

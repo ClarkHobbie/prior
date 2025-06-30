@@ -81,34 +81,6 @@ public class Prior {
         items = items;
     }
 
-    private static List<Item> parseList (ListIndex<String> listIndex) {
-        ArrayList<Item> arrayList = new ArrayList<>();
-
-        while (listIndex.index < listIndex.list.size()) {
-            Item item = new Item();
-            item.parse(listIndex);
-            arrayList.add(item);
-        }
-
-        return arrayList;
-    }
-
-    private static Item[] parseFile(List<String> text) {
-        Iterator<String> iterator = text.iterator();
-        ArrayList<Item> arrayList = new ArrayList<>();
-        ListIndex<String> listIndex = new ListIndex<String>(text, 0);
-
-        while (listIndex.index < listIndex.list.size()) {
-            Item item = new Item();
-            ListIndex<String> newListIndex = new ListIndex<>(listIndex);
-            listIndex.index = listIndex.index + 1;
-            item.parse(listIndex);
-            arrayList.add(item);
-        }
-
-        return (Item[]) arrayList.toArray();
-    }
-
     public static List<Item>  readFile (Path path) {
         try {
             List<String> list = Files.readAllLines(path);
@@ -123,16 +95,13 @@ public class Prior {
         ListIndex<String> listIndex = new ListIndex<>(list, 0);
         ArrayList<Item> arrayList = new ArrayList<>();
 
-        while (listIndex.index < list.size()) {
-            arrayList.add(parseItem(list, listIndex));
+        for (int index = 0; index < list.size() && listIndex.index < list.size(); index++) {
+            Item item = new Item();
+            item.parse(listIndex);
+            arrayList.add(item);
         }
 
         return arrayList;
     }
 
-    public static Item parseItem(List<String> list, ListIndex<String> listIndex) {
-        Item item = new Item();
-        item.parse(listIndex);
-        return item;
-    }
 }

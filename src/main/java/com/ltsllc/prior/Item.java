@@ -77,20 +77,21 @@ public class Item {
     }
 
     public void parse (ListIndex<String> listIndex) {
+        if (listIndex.index > listIndex.list.size()) {
+            throw new RuntimeException("impossible case");
+        }
+        if (Character.isWhitespace(listIndex.list.get(0).charAt(0))) {
+            throw new RuntimeException("impossible case");
+        }
+
         itemName = listIndex.list.get(listIndex.index);
         listIndex.index++;
-        for (int i = listIndex.index; i < listIndex.list.size(); i++) {
-            if (listIndex.list.get(i).startsWith("\t") || listIndex.list.get(i).startsWith(" ")) {
-                String tempString = listIndex.list.get(i);
-                int index = 0;
-                while (Character.isWhitespace(tempString.charAt(index))) {
-                    index++;
-                }
-                addReason(tempString.substring(index));
-            } else {
-                listIndex.index = i;
-                break;
-            }
+
+        for (int index = listIndex.index; index < listIndex.list.size() && Character.isWhitespace(listIndex.list.get(listIndex.index).charAt(0));
+        listIndex.index++) {
+            String string = listIndex.list.get(index);
+            string = string.trim();
+            reasons.add(string);
         }
     }
 

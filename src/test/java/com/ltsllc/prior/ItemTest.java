@@ -52,14 +52,11 @@ class ItemTest {
 
         String[] strings = { "1\n", "Because it's number one\n"};
         ByteArrayBuilder byteBuilder = new ByteArrayBuilder();
-
-        for (int i = 0; i < strings.length; i++) {
-            byteBuilder.add(strings[i]);
-        }
-
+        byteBuilder.add(strings);
         byte[] buff = byteBuilder.toByteArray();
         Prior.inputStream = new ByteArrayInputStream(buff);
         Scanner scanner = new Scanner(Prior.inputStream);
+
         itemOne.prioritize(itemTwo, scanner);
 
         assert (itemOne.reasons.size() == 1);
@@ -87,35 +84,6 @@ class ItemTest {
     }
 
     @Test
-    void newReason() {
-        //
-         // no reason
-        //
-        String[] strings = {
-                "/n"
-        };
-        ByteArrayBuilder byteArrayBuilder = new ByteArrayBuilder();
-        byteArrayBuilder.add(strings);
-        Prior.inputStream = new ByteArrayInputStream(byteArrayBuilder.toByteArray());
-        Scanner scanner = new Scanner(Prior.inputStream);
-
-        Item item = new Item();
-        item.newReason(scanner);
-
-        //
-         // a new reason
-        //
-        strings = new String[] {
-                "Because it's number one\n"
-        };
-        byteArrayBuilder = new ByteArrayBuilder();
-        byteArrayBuilder.add(strings);
-        Prior.inputStream = new ByteArrayInputStream(byteArrayBuilder.toByteArray());
-        scanner = new Scanner(Prior.inputStream);
-        item.newReason(scanner);
-    }
-
-    @Test
     void printReasons() {
         //
          // no reasons
@@ -138,6 +106,7 @@ class ItemTest {
         }
 
         Item item = new Item("one");
+        item.addReason("Because it's number one");
 
         FileWriter fileWriter = null;
 
@@ -155,7 +124,13 @@ class ItemTest {
             throw new RuntimeException("could not close FileWiter", e);
         }
 
+        TextFile textFile = new TextFile(file);
+        textFile.load();
+
         assert (file.exists());
+        assert (textFile.getText().get(0).equalsIgnoreCase("one"));
+        assert (Character.isWhitespace(textFile.getText().get(1).charAt(0)));
+        assert (textFile.getText().get(1).trim().equalsIgnoreCase("Because it's number one"));
     }
 
     @Test
@@ -186,7 +161,7 @@ class ItemTest {
         Prior.inputStream = new ByteArrayInputStream(byteArrayBuilder.toByteArray());
         scanner = new Scanner(Prior.inputStream);
 
-        result = itemOne.compareTo(itemTwo, scanner);
+        result = itemTwo.compareTo(itemOne, scanner);
 
         assert (result == 2);
     }

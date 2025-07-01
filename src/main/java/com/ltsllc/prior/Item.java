@@ -99,7 +99,7 @@ public class Item {
         int answer = 0;
 
         while (answer != 1 && answer != 2) {
-            System.out.println("Which is more important one or two?");
+            System.out.println("Which is more important?");
             System.out.print("1) ");
             System.out.print(itemName);
             System.out.println();
@@ -107,52 +107,31 @@ public class Item {
             System.out.println(other.itemName);
 
             answer = scanner.nextInt();
-            String tempString = scanner.nextLine();
+            scanner.nextLine();
 
-            if (answer == 1 && reasons.size() == 0) {
-                newReason(scanner);
-            } else if (answer == 1){
-                setReason(scanner);
-            }
-
-            if (answer == 2 && other.getReasons().size() == 0) {
-                other.newReason(scanner);
+            if (answer == 1) {
+                addReason(scanner);
             } else if (answer == 2) {
-                other.setReason(scanner);;
+                other.addReason(scanner);
             }
         }
 
         return answer;
     }
 
-    public void setReason(Scanner scanner) {
-        int answer = -1;
-        while (answer == -1) {
-            if (reasons.size() < 1) {
-                newReason(scanner);
+    public void addReason(Scanner scanner) {
+        String string = null;
+        while (string == null || string.length() == 0) {
+            System.out.println("Is there a reason? (hit return for an existing reason or no reason) ");
+            System.out.println();
+            printReasons();
+            string = scanner.nextLine();
+            if (string.equalsIgnoreCase("")) {
+                break;
+            } else {
+                string.trim();
+                reasons.add(string);
             }
-            else {
-                System.out.println("Enter new reason or hit return to choose an existing reason");
-                System.out.println();
-                printReasons();
-
-                String tempString = null;
-
-                tempString = scanner.nextLine();
-                if (tempString.equalsIgnoreCase("")) {
-                    break;
-                }
-                tempString.trim();
-                reasons.add(tempString);
-            }
-        }
-    }
-
-    public void newReason (Scanner scanner) {
-        System.out.println("Enter new reason or hit return for none");
-        String tempString = scanner.nextLine();
-        if (!tempString.equalsIgnoreCase("")) {
-            reasons.add(tempString);
         }
     }
 

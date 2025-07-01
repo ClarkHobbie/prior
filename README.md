@@ -28,3 +28,12 @@ prior refers to as reasons.
 When prior compares two items, the user can enter a new reason (without a whitespace character), or hit return to
 signify an existing reason or no reason at all.
 
+## Writing the file
+
+The file is written in the new, priority order,  "Priority order" is in the order of which item "won" the most
+comparisons (ie the item that was chosen as more important the most number of times).  If two items have the same
+"score" (ie two items were chosen as more important the same number of times) then the item the user designated as
+more important in their own comparison is judged as having a higher priority.
+
+The original file is renamed to *file name.backup*
+during the operation and discarded if everything goes well. 

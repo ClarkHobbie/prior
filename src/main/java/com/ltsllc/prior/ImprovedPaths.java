@@ -10,4 +10,10 @@ public class ImprovedPaths {
         Path path = Paths.get(pathString);
         return path;
     }
+
+    public static Path appendToPath(Path path, String suffix) {
+        String string = path + suffix;
+        Path tempPath = Path.of (string);
+        return tempPath;
+    }
 }

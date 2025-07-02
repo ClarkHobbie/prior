@@ -20,7 +20,17 @@ public class Prior {
             System.exit(1);
         }
 
+        //
+         // make a backup
+        //
         Path path = Paths.get(args[0]);
+        Path backup = ImprovedPaths.appendToPath(path, ".backup");
+        try {
+            Files.copy(path, backup);
+        } catch (IOException e) {
+            throw new RuntimeException("error macking backup file, " + backup, e);
+        }
+
         List<Item> items = readFile(path);
 
         score = new int[items.size()];
@@ -53,6 +63,10 @@ public class Prior {
             fileWriter.close();
         } catch (IOException e) {
             throw new RuntimeException("could not close file " + path.toFile(), e);
+        }
+
+        if (!backup.toFile().delete()) {
+            throw  new RuntimeException("could not remove backup file, " + backup);
         }
     }
 

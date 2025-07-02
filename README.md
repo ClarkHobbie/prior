@@ -35,5 +35,5 @@ comparisons (ie the item that was chosen as more important the most number of ti
 "score" (ie two items were chosen as more important the same number of times) then the item the user designated as
 more important in their own comparison is judged as having a higher priority.
 
-The original file is renamed to *file name.backup*
+The original file is renamed to *<file name\>.backup*
 during the operation and discarded if everything goes well. 

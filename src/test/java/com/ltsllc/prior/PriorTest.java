@@ -1,5 +1,7 @@
 package com.ltsllc.prior;
 
+import com.ltsllc.commons.io.TextFile;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
@@ -36,6 +38,7 @@ class PriorTest {
         byteArrayBuilder.add(strings);
         Prior.inputStream = new ByteArrayInputStream(byteArrayBuilder.toByteArray());
         String[] args = { "temp.txt" };
+
         Prior.main(args);
         textFile = new TextFile("temp.txt");
         textFile.load();
@@ -48,6 +51,10 @@ class PriorTest {
         ArrayList<String> strings = new ArrayList<>();
         strings.add("one");
         strings.add("two");
+
+        TextFile textFile = new TextFile("test.txt");
+        textFile.setText(strings);
+        textFile.store();
 
         Prior main = new Prior();
         Path path = Paths.get ("test.txt");

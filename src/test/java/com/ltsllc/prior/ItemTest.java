@@ -1,5 +1,7 @@
 package com.ltsllc.prior;
 
+import com.ltsllc.commons.io.TextFile;
+
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;

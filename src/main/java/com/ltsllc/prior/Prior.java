@@ -1,5 +1,7 @@
 package com.ltsllc.prior;
 
+import com.ltsllc.commons.util.ImprovedPaths;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,10 +27,17 @@ public class Prior {
         //
         Path path = Paths.get(args[0]);
         Path backup = ImprovedPaths.appendToPath(path, ".backup");
+        if (Files.exists(backup)) {
+            try {
+                Files.delete(backup);
+            } catch (IOException e) {
+                throw new RuntimeException("error deleting file, " + backup, e);
+            }
+        }
         try {
             Files.copy(path, backup);
         } catch (IOException e) {
-            throw new RuntimeException("error macking backup file, " + backup, e);
+            throw new RuntimeException("error making backup file, " + backup, e);
         }
 
         List<Item> items = readFile(path);

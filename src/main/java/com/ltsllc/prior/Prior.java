@@ -10,7 +10,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
-
+/******************************************************************************
+ * Prioritize a list
+ */
 public class Prior {
     public static InputStream inputStream = System.in;
     private static int[] score = null;
@@ -89,10 +91,10 @@ public class Prior {
                 int result = itemOne.compareTo(itemTwo, scanner);
                 if (result == 1) {
                     itemOne.incrementScore();
-                    itemOne.setIsBefore(itemTwo, true);
+                    itemOne.setIsBefore(itemTwo);
                 } else if (result == 2) {
                     itemTwo.incrementScore();
-                    itemTwo.setIsBefore(itemOne, true);
+                    itemTwo.setIsBefore(itemOne);
                 } else {
                     throw new RuntimeException("impossible case");
                 }

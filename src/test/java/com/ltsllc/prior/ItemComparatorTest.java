@@ -14,7 +14,7 @@ class ItemComparatorTest {
         itemOne.setScore(1);
 
         Item itemTwo = new Item("two");
-        itemOne.setIsBefore(itemTwo, true);
+        itemOne.setIsBefore(itemTwo);
 
         Comparator<Item> comparator = new ItemComparator();
         int result = comparator.compare(itemOne, itemTwo);

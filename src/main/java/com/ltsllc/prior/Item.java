@@ -3,6 +3,9 @@ package com.ltsllc.prior;
 import java.io.*;
 import java.util.*;
 
+/******************************************************************************
+ * An item to prioritize.
+ */
 public class Item {
     protected String itemName;
     protected int score = 0;
@@ -25,10 +28,6 @@ public class Item {
         return comesBefore;
     }
 
-    public void setComesBefore(Map<Item, Boolean> comesBefore) {
-        this.comesBefore = comesBefore;
-    }
-
     public boolean isBefore (Item item) {
         Boolean bool = false;
 
@@ -41,9 +40,9 @@ public class Item {
     }
 
 
-    public void setIsBefore (Item item, boolean value) {
-        Boolean bool = new Boolean(value);
-        comesBefore.put(item, bool);
+    public void setIsBefore (Item item) {
+        Boolean value = new Boolean(true);
+        comesBefore.put(item, value);
     }
 
     public ArrayList<String> getReasons() {
@@ -76,6 +75,14 @@ public class Item {
         reasons.add(string);
     }
 
+    /**************************************************************************
+     * Parse an {@link Item} from a {@link ListIndex}.
+     *
+     * The method updates the listIndex.index to reflect where parsing
+     * finished.
+     *
+     * @param listIndex Where parsing should take place.
+     */
     public void parse (ListIndex<String> listIndex) {
         if (listIndex.index > listIndex.list.size()) {
             throw new RuntimeException("impossible case");
@@ -95,6 +102,20 @@ public class Item {
         }
     }
 
+    /**************************************************************************
+     * Compare one {@link Item} with another and return 1 if the instance is
+     * more important than the other instance and 2 if the other instance is
+     * more important than this instance.
+     *
+     * The method uses the provided {@link Scanner} to get answers and
+     * {@link System#out} to print to the user.
+     *
+     * @param other The other {@link Item} to compare to.
+     * @param scanner The source for answers as to which instance is more
+     *                important.
+     * @return 1 if this instance is more important than the other instance,
+     * 2 if the other is more important.
+     */
     public int prioritize (Item other, Scanner scanner) {
         int answer = 0;
 
@@ -119,6 +140,16 @@ public class Item {
         return answer;
     }
 
+    /**************************************************************************
+     * Ask for a reason why an instance is more important.
+     *
+     * This method will print the existing reasons (if any) on
+     * {@link System#out}.  If the response is the empty string (""), then the
+     * method assumes that the user wants to use an existing reason or no
+     * reason at all, and doesn't add a reason.
+     *
+     * @param scanner The object to be used to get the answer.
+     */
     public void addReason(Scanner scanner) {
         String string = null;
         while (string == null || string.length() == 0) {
@@ -143,6 +174,11 @@ public class Item {
         }
     }
 
+    /**************************************************************************
+     * Write the {@link Item} out to the provided {@link FileWriter}.
+     *
+     * @param fileWriter The {@link FileWriter} to write to.
+     */
     public void write(FileWriter fileWriter) {
         try {
             fileWriter.write(itemName + "\n");

@@ -2,7 +2,7 @@ package com.ltsllc.prior;
 
 import java.util.ArrayList;
 
-/******************************************************************************
+/**
  * A class for building byte arrays.
  */
 public class ByteArrayBuilder {
@@ -15,7 +15,7 @@ public class ByteArrayBuilder {
         list.add(string.getBytes());
     }
 
-    /**************************************************************************
+    /**
      * Create a byte array from what you have.
      *
      * @return The corresponding byte array.
@@ -40,7 +40,7 @@ public class ByteArrayBuilder {
         return buff;
     }
 
-    /**************************************************************************
+    /**
      * Add an array of strings to the instance.
      *
      * This method will add each string to the instance, not the array itself.

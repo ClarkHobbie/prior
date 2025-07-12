@@ -2,11 +2,11 @@ package com.ltsllc.prior;
 
 import java.util.Comparator;
 
-/******************************************************************************
+/**
  * A class for comparing two {@link Item}s.
  */
 public class ItemComparator implements Comparator<Item> {
-    /**************************************************************************
+    /**
      * Compare two {@link Item}s, return -1 if the first should come before
      * the other, 1 if the second should come before the other.
      *

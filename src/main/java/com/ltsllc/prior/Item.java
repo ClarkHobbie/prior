@@ -3,7 +3,7 @@ package com.ltsllc.prior;
 import java.io.*;
 import java.util.*;
 
-/******************************************************************************
+/**
  * An item to prioritize.
  */
 public class Item {
@@ -174,7 +174,7 @@ public class Item {
         }
     }
 
-    /**************************************************************************
+    /**
      * Write the {@link Item} out to the provided {@link FileWriter}.
      *
      * @param fileWriter The {@link FileWriter} to write to.

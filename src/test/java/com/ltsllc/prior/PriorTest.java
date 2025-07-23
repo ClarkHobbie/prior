@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ import java.util.Scanner;
 class PriorTest {
 
     @Test
-    void main() {
+    void main() throws IOException {
         String[] strings = {
                 "one",
                 "\tBecause it's number one",
@@ -47,7 +48,7 @@ class PriorTest {
 
 
     @Test
-    void readFile() {
+    void readFile() throws IOException {
         ArrayList<String> strings = new ArrayList<>();
         strings.add("one");
         strings.add("two");
@@ -103,7 +104,7 @@ class PriorTest {
     }
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws IOException {
         String[] text = {
                 "one",
                 "\tbecause it's number one",
